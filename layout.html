@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Enter the title -->
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/stylesheet.css">
+</head>
+
+<body>
+    <header>
+        <!-- Edit header contents if necessary -->
+        <div id="header-right">
+            <ul>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/signup">SignUp</a></li>
+                <li><a href="/account">Account</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">{% block body %}{% endblock %}</div>
+            <div class="col-sm-2"></div>
+        </div>
+    </div>
+</body>
+
+</html>
