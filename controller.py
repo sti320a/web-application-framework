@@ -13,6 +13,10 @@ def showIndexView():
 def showLoginView():
     return render_template('login.html')
 
+@app.route('/signup')
+def showSignUpView():
+    return render_template('signup.html')
+
 
 
 if __name__ == '__main__':
