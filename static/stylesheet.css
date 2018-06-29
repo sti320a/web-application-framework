@@ -27,3 +27,15 @@ header{
     margin: 0 10px 0 0;
     padding: 10px 0 10px 0;
 }
+
+/* index main content */
+.content-box{
+    display: block;
+    color: #555;
+    text-decoration: none;
+    height: 50px;
+    margin: 0 0 20px 0;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}

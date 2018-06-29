@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+   <!-- copy html from here -->
+   <!-- using "contents-list.html" from here -->
+   <div id="main-contents-list-container">
+        {% for i in range(1,5): %}
+        <a href="#" class="content-box">This includes some content.</a>
+        {% endfor %} 
+    </div>
+    <!-- using "contents-list.html" to here -->
+   <!-- copy html to here -->
+{% endblock %}
