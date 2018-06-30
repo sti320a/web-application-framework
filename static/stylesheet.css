@@ -28,8 +28,8 @@ header{
     padding: 10px 0 10px 0;
 }
 
-/* index main content */
-.content-box{
+/* main contents list */
+.contents-box{
     display: block;
     color: #555;
     text-decoration: none;
@@ -37,5 +37,32 @@ header{
     margin: 0 0 20px 0;
     padding: 10px;
     border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+
+/* contents.html */
+#contents-title{
+    border-bottom: 1px solid #eee; 
+}
+
+#contents-header-container{
+    padding: 10px 0 10px 0;
+}
+
+#contents-header-container ul li{
+    list-style: none;
+    background-color: #eee;
+    margin: 0 20px 0 0;
+    padding: 0 10px 0 10px;
+    border-radius: 4px;
+    float: left;
+    display: block;
+}
+
+#contents-main-container{
+    border: 1px solid #eee;
+    padding: 10px 10px 10px 10px;
+    margin: 20px 0 20px 0;
     border-radius: 4px;
 }

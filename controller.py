@@ -17,6 +17,10 @@ def showLoginView():
 def showSignUpView():
     return render_template('signup.html')
 
+@app.route('/contents')
+def showContentsUpView():
+    return render_template('contents.html')
+
 
 
 if __name__ == '__main__':
