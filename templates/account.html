@@ -1,0 +1,24 @@
+{% extends "layout.html" %} 
+{% block body %}
+<!-- copy html from here -->
+<!-- using "account.html" from here -->
+<div id="account-container">
+    <h2 id="account-user-name">Account username</h2>
+    <div id="account-profile-container">
+        <h3 id="account-profile-title">Profile</h3>
+        <img id="account-profile-img" src="">
+        <p id="account-profile-description">You can see and edit your profile here.</p>
+        <button id="account-profile-edit-btn" class="btn btn-default">Edit</button>
+    </div>
+    <div id="account-setting-container">
+        <h3 id="account-setting-title">Setting</h3>
+        <ul id="account-setting-list-container-ul">
+            <li><a href="#">Modify account's email</a></li>
+            <li><a href="#">Modify account's password</a></li>
+            <li><a href="#">Resign</a></li>
+        </ul>
+    </div>
+</div>
+<!-- using "account.html" to here -->
+<!-- copy html to here -->
+{% endblock %}

@@ -21,6 +21,9 @@ def showSignUpView():
 def showContentsUpView():
     return render_template('contents.html')
 
+@app.route('/account')
+def showAccountView():
+    return render_template('account.html')
 
 
 if __name__ == '__main__':

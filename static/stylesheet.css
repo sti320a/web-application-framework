@@ -66,3 +66,33 @@ header{
     margin: 20px 0 20px 0;
     border-radius: 4px;
 }
+
+/* account */
+#account-profile-img{
+    width: 100px;
+    height: 100px;
+    border: 1px solid #eee;
+}
+
+
+#account-profile-container{
+    border: 1px solid #eee;
+    padding: 10px;
+    margin: 0 0 20px 0;
+}
+
+
+#account-setting-container{
+    border: 1px solid #eee;
+    padding: 10px;
+}
+
+#account-setting-list-container-ul{
+    display: block;
+    border: 1px solid #eee;
+    padding: 20px 0 20px 30px;
+}
+
+#account-setting-list-container-ul li{
+    
+}
