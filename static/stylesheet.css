@@ -93,6 +93,14 @@ header{
     padding: 20px 0 20px 30px;
 }
 
-#account-setting-list-container-ul li{
-    
+
+
+/* edit-profile.html */
+#edit-profile-container{
+    border: 1px solid #eee;
+    padding: 20px 30px 20px 30px;
+}
+
+#edit-profile-container h2{
+padding: 10px 0 10px 0;
 }

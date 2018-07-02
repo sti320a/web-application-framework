@@ -25,6 +25,14 @@ def showContentsUpView():
 def showAccountView():
     return render_template('account.html')
 
+@app.route('/user')
+def showUserView():
+    return render_template('user.html')
+
+@app.route('/edit_profile')
+def showEditProfileView():
+    return render_template('editProfile.html')
+
 
 if __name__ == '__main__':
     app.debug = True

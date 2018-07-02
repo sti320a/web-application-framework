@@ -1,0 +1,21 @@
+{% extends "layout.html" %} {% block body %}
+<div id="edit-profile-container">
+    <form action="/" method="">
+        <h2>Edit profile</h2>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="name" class="form-control" value="" autofocus>
+        </div>
+        <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Image</label>
+            <input type="file" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Done</button>
+        <a href="account" class="btn btn-default">Cancel</a>
+    </form>
+</div>
+{% endblock %}
