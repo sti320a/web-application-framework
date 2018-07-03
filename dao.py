@@ -11,11 +11,11 @@ def create():
     conn.commit()
     conn.close()
 
-def insert():
+def insert(id, name):
     conn = sqlite3.connect(ROOT_DIR+'/db/user.db')
     c = conn.cursor()
     insert = "INSERT INTO user(id, name) VALUES(?, ?)"
-    place_holder = [2, "Hello world!"]
+    place_holder = [id, name]
     c.execute(insert, place_holder)
     conn.commit()
     conn.close()

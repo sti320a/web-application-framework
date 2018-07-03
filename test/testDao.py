@@ -3,5 +3,5 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '\\..\\')
 import dao
 
 dao.create()
-dao.insert()
+dao.insert(3, "Hello, world!!")
 dao.selectAll()
