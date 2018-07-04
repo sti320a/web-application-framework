@@ -3,30 +3,47 @@ import sys, os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def create():
+
+# create("CREATE TABLE IF NOT EXISTS user (id int, name varchar(64))")
+def create(statement):
     conn = sqlite3.connect(ROOT_DIR+'/db/user.db')
     c = conn.cursor()
-    create_table="CREATE TABLE IF NOT EXISTS user (id int, name varchar(64))"
-    c.execute(create_table)
+    c.execute(statement)
     conn.commit()
     conn.close()
 
-def insert(id, name):
+# insert("INSERT INTO user(id, name) VALUES(?,?)", [123, "taro"])
+def insert(statement, place_holder):
     conn = sqlite3.connect(ROOT_DIR+'/db/user.db')
     c = conn.cursor()
-    insert = "INSERT INTO user(id, name) VALUES(?, ?)"
-    place_holder = [id, name]
-    c.execute(insert, place_holder)
+    c.execute(statement, place_holder)
     conn.commit()
     conn.close()
 
-def selectAll():
+# update("UPDATE user SET name=? WHERE id=?", ["goro", 123])
+def update(statement, place_holder):
     conn = sqlite3.connect(ROOT_DIR+'/db/user.db')
     c = conn.cursor()
-    select = "SELECT * FROM user"
-    result = c.execute(select)
+    c.execute(statement, place_holder)
     conn.commit()
-    for row in result:
-        print(row)
+    conn.close()
+
+# delete("DELETE FROM user WHERE id=?", [123])
+def delete(statement, place_holder):
+    conn = sqlite3.connect(ROOT_DIR+'/db/user.db')
+    c = conn.cursor()
+    c.execute(statement, place_holder)
+    conn.commit()
+    conn.close()
+    
+# select("SELECT * FROM user", True) / True: print on console  / False: not print on console
+def select(statement, console):
+    conn = sqlite3.connect(ROOT_DIR+'/db/user.db')
+    c = conn.cursor()
+    result = c.execute(statement)
+    conn.commit()
+    if(console):
+        for row in result:
+            print(row)
     conn.close()
     
