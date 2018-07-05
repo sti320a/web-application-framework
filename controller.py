@@ -2,6 +2,7 @@
 # controller.py
 
 from flask import Flask, session, redirect, render_template, request
+import signUpService
 
 app = Flask(__name__)
 
@@ -15,7 +16,15 @@ def showLoginView():
 
 @app.route('/signup')
 def showSignUpView():
+    
     return render_template('signup.html')
+
+@app.route('/provisional_signup')
+def signupUserProvisionally():
+    signUpService.signUpUserProvisonally("taro", "123@abc.com", "xxx")
+    return render_template('index.html')
+
+
 
 @app.route('/contents')
 def showContentsUpView():
