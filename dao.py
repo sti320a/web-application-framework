@@ -47,3 +47,17 @@ def select(statement, db_file_name, console):
             print(row)
     conn.close()
     
+
+def selectReturn(statement, db_file_name, console):
+    conn = sqlite3.connect(ROOT_DIR+'/db/{}.db'.format(db_file_name))
+    c = conn.cursor()
+    sqlResult = c.execute(statement)
+    conn.commit()
+
+    result = []
+    for row in sqlResult:
+        result.append(row)
+        if(console):print(row)
+    conn.close()
+
+    return result
