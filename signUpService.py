@@ -2,6 +2,9 @@ import dao
 
 def signUpUserProvisonally(username, email, password):
     # TODO1 validation check
+    if validationCheck4InsertProvisionalUser(username, email, password) == False:
+        print("validation error")
+        return False
 
     # TODO2 password to hash
 
@@ -12,6 +15,11 @@ def signUpUserProvisonally(username, email, password):
 
 def getNewUserId4InsertProvisionalUser():
     userList = dao.selectReturn("SELECT * FROM provisionalUser", "user.db", True);
-    newId = userList[-1][0] + 1
+    newUserId = userList[-1][0] + 1
     print(newUserId)
     return newUserId
+
+def validationCheck4InsertProvisionalUser(username, email, password):
+    if len(password) <= 8:
+        print("Password is too short")
+        return False

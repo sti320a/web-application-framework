@@ -21,7 +21,7 @@ def showSignUpView():
 
 @app.route('/provisional_signup')
 def signupUserProvisionally():
-    signUpService.signUpUserProvisonally("taro", "123@abc.com", "xxx")
+    signUpService.signUpUserProvisonally("taro", "123@abc.com", "123456789")
     return render_template('index.html')
 
 
