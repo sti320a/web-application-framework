@@ -16,6 +16,8 @@ def signUpUserProvisonally(username, email, password):
 def getNewUserId4InsertProvisionalUser():
     userList = dao.selectReturn("SELECT * FROM provisionalUser", "user.db", True);
     newUserId = userList[-1][0] + 1
+    if newUserId==None:
+        return False        
     print(newUserId)
     return newUserId
 
