@@ -87,17 +87,43 @@ def selectReturn(statement, db_file_name, console):
 """
 Practical SQL Function
 """
-def insertProvisionalUser2Db(username, email, auth_key, db_file_name):
-    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
-    id = getNewUserId4InsertProvisionalUser(db_file_name)
-    insert("INSERT INTO provisionalUser (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], db_file_name)
-    return True
-
-def getNewUserId4InsertProvisionalUser(db_file_name):
-    userList = selectReturn("SELECT * FROM provisionalUser", db_file_name, False);
+def getNewId4Insert(table_name, db_file_name):
+    userList = selectReturn("SELECT * FROM {}".format(table_name), db_file_name, False);
     if len(userList) == 0:
         return 1
     newUserId = userList[-1][0] + 1
     if newUserId==None:
         return False        
     return newUserId
+
+"""
+Provisionally User Sign up  
+"""
+def insertProvisionalUser2Db(username, email, auth_key, db_file_name):
+    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    id = getNewId4Insert("provisionalUser",db_file_name)
+    insert("INSERT INTO provisionalUser (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], db_file_name)
+    return True
+
+def deleteProvisionalUser2Db(username, email, db_file_name):
+    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    delete("DELETE FROM provisionalUser WHERE name=? AND email = ?", [username, email], db_file_name)
+    return True
+
+"""
+User Sign up
+"""
+def insertUser2Db(username, email, auth_key, db_file_name):
+    create("CREATE TABLE IF NOT EXISTS user (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    id = getNewId4Insert("user", db_file_name)
+    insert("INSERT INTO user (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], db_file_name)
+    return True
+
+"""
+Delete user
+"""
+
+def deleteUserFromDb(username, email, auth_key, db_file_name):
+    create("CREATE TABLE IF NOT EXISTS user (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    delete("DELETE FROM user WHERE name=? AND email=? AND auth_key=?", [username, email, auth_key], db_file_name)
+    return True
