@@ -5,34 +5,46 @@ def signUpUserProvisonally(username, email, password):
     
     # validation check
     if validationCheck4InsertProvisionalUser(username, email, password) == False:
-        print("validation error")
+        print("Validation error")
         return False
     
     # password to hash
     auth_key = covert2AuthKeyFromPassword(password)
     if auth_key == None:
+        print("Auth_key is None")
         return False
 
-    dao.create("CREATE TABLE IF NOT EXISTS provisionalUser (id int, name varchar(64), email varchar(64), auth_key varchar(64))", "user.db")
-    id = getNewUserId4InsertProvisionalUser()
-    dao.insert("INSERT INTO provisionalUser (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], "user.db")
-    dao.select("SELECT * FROM provisionalUser", "user.db", True)
+    # insert user provisionally to user db
+    if dao.insertProvisionalUser2Db(username, email, auth_key) != True:
+        print("InsertProvisionalUser2Db was failed")
+        return False
 
-def getNewUserId4InsertProvisionalUser():
-    userList = dao.selectReturn("SELECT * FROM provisionalUser", "user.db", True);
-    newUserId = userList[-1][0] + 1
-    if newUserId==None:
-        return False        
-    print(newUserId)
-    return newUserId
+
 
 def validationCheck4InsertProvisionalUser(username, email, password):
+    if (username == None) or (username == ""):
+        print("Username is empty")        
+        return False
+    
+    if (email == None) or (email == ""):
+        print("Email is empty")
+        return False
+    
+    if (password == None) or (password == ""):
+        print("Password is empty")
+        return False
+
     if len(password) <= 8:
         print("Password is too short")
         return False
+    if ("@" not in email) or ("." not in email):
+        print("This email is invalid")
+        return False
+
     return True
+
 
 def covert2AuthKeyFromPassword(password):
     if password == None:
-        return Flase
+        return False
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
