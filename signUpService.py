@@ -20,6 +20,11 @@ def signUpUserProvisonally(username, email, password):
         return False
 
 
+#send email for sign up User
+def sendEmail4SignUpUser(username, email, signUpUrl):
+    # TODO: need to implements 
+    return True
+
 
 def validationCheck4InsertProvisionalUser(username, email, password):
     if (username == None) or (username == ""):

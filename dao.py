@@ -122,8 +122,9 @@ def insertUser2Db(username, email, auth_key, db_file_name):
 """
 Delete user
 """
-
 def deleteUserFromDb(username, email, auth_key, db_file_name):
     create("CREATE TABLE IF NOT EXISTS user (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
     delete("DELETE FROM user WHERE name=? AND email=? AND auth_key=?", [username, email, auth_key], db_file_name)
     return True
+
+ 
