@@ -1,8 +1,9 @@
 import dao
 import hashlib
 import uuid
+import logging
 
-def signUpUserProvisonally(username, email, password):
+def signUpUserProvisionally(username, email, password, db_file_name):
     
     # validation check
     if validationCheck4InsertProvisionalUser(username, email, password) == False:
@@ -16,13 +17,20 @@ def signUpUserProvisonally(username, email, password):
         return False
 
     # insert user provisionally to user db
-    if dao.insertProvisionalUser2Db(username, email, auth_key, email_confirm_pass) != True:
+    email_confirm_pass = getEmailConfirmPass()
+    if dao.insertProvisionalUser2Db(username, email, auth_key, email_confirm_pass, db_file_name) != True:
         print("InsertProvisionalUser2Db was failed")
         return False
 
+    # send email for sign up user
+    sendEmail4SignUpUser(username, email, email_confirm_pass)
+
+
+    logging.info("signUpUserProvisionally is success.")
+    return True
 
 #send email for sign up User
-def sendEmail4SignUpUser(username, email, signUpUrl):
+def sendEmail4SignUpUser(username, email, email_confirm_pass):
     # TODO: need to implements 
     return True
 
