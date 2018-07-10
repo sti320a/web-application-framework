@@ -99,10 +99,10 @@ def getNewId4Insert(table_name, db_file_name):
 """
 Provisionally User Sign up  
 """
-def insertProvisionalUser2Db(username, email, auth_key, db_file_name):
-    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+def insertProvisionalUser2Db(username, email, auth_key, email_confirm_pass, db_file_name):
+    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64), email_confirm_pass varchar(64))", db_file_name)
     id = getNewId4Insert("provisionalUser",db_file_name)
-    insert("INSERT INTO provisionalUser (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], db_file_name)
+    insert("INSERT INTO provisionalUser (id, name, email, auth_key, email_confirm_pass) VALUES (?,?,?,?,?)", [id, username, email, auth_key, email_confirm_pass], db_file_name)
     return True
 
 def deleteProvisionalUser2Db(username, email, db_file_name):

@@ -1,5 +1,6 @@
 import dao
 import hashlib
+import uuid
 
 def signUpUserProvisonally(username, email, password):
     
@@ -15,7 +16,7 @@ def signUpUserProvisonally(username, email, password):
         return False
 
     # insert user provisionally to user db
-    if dao.insertProvisionalUser2Db(username, email, auth_key) != True:
+    if dao.insertProvisionalUser2Db(username, email, auth_key, email_confirm_pass) != True:
         print("InsertProvisionalUser2Db was failed")
         return False
 
@@ -53,3 +54,6 @@ def covert2AuthKeyFromPassword(password):
     if password == None:
         return False
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+def getEmailConfirmPass():
+    return str(uuid.uuid4()).replace("-","")
