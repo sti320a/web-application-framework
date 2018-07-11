@@ -2,6 +2,8 @@ import dao
 import hashlib
 import uuid
 import logging
+import sendEmailService
+import const
 
 def signUpUserProvisionally(username, email, password, db_file_name):
     
@@ -25,13 +27,13 @@ def signUpUserProvisionally(username, email, password, db_file_name):
     # send email for sign up user
     sendEmail4SignUpUser(username, email, email_confirm_pass)
 
-
     logging.info("signUpUserProvisionally is success.")
     return True
 
-#send email for sign up User
+# send email for sign up User
 def sendEmail4SignUpUser(username, email, email_confirm_pass):
-    # TODO: need to implements 
+    # sendEmailService.sendEmail(email, const.EMAIL_SUBJECT_SIGNUP_CONFIRM, const.EMAIL_BODY_SIGNUP_CONFIRM.format(email_confirm_pass))
+    sendEmailService.sendEmailMock(email, const.EMAIL_SUBJECT_SIGNUP_CONFIRM, const.EMAIL_BODY_SIGNUP_CONFIRM.format(username, email_confirm_pass))
     return True
 
 
@@ -51,6 +53,7 @@ def validationCheck4InsertProvisionalUser(username, email, password):
     if len(password) <= 8:
         print("Password is too short")
         return False
+        
     if ("@" not in email) or ("." not in email):
         print("This email is invalid")
         return False
