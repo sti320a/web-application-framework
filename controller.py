@@ -3,6 +3,7 @@
 
 from flask import Flask, session, redirect, render_template, request
 import signUpService
+import const
 
 app = Flask(__name__)
 
@@ -16,14 +17,18 @@ def showLoginView():
 
 @app.route('/signup')
 def showSignUpView():
-    
     return render_template('signup.html')
 
-@app.route('/provisional_signup')
+@app.route('/provisional_signup', methods=['POST'])
 def signupUserProvisionally():
-    signUpService.signUpUserProvisonally("taro", "123@abc.com", "123456789")
-    return render_template('index.html')
-
+    if request.method == "POST":
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        signUpService.signUpUserProvisionally(username, email, password, const.DB_FILE_NAME)
+        return render_template('provisional_signup_completed.html', email=email)
+    else:
+        return redirect('/signup')
 
 
 @app.route('/contents')

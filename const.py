@@ -1,5 +1,8 @@
 #! python3
 
+DB_FILE_NAME = "testUserDb"
+
+
 EMAIL_SUBJECT_SIGNUP_CONFIRM = "本登録を完了しましょう。"
 EMAIL_BODY_SIGNUP_CONFIRM = """
 {}様 \n 

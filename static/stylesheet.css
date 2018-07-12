@@ -8,6 +8,15 @@
     clear:both;
 }
 
+.font-warning{
+    color:red;
+    font-weight: bold;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+
 header{
     background-color: #fff;
     border-bottom: 1px solid #eee;
@@ -104,3 +113,18 @@ header{
 #edit-profile-container h2{
 padding: 10px 0 10px 0;
 }
+
+
+/* provisional_signup_completed.html */
+#provisional-signup-completed-container{
+    padding: 10px 10px 10px 10px;
+}
+
+#provisional-signup-completed-title{
+    letter-spacing: 2px;
+}
+
+#provisional-signup-completed-description{
+    padding: 20px 0 20px 0;
+}
+

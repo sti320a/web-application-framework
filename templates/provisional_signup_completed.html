@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="provisional-signup-completed-container">
+    <h2 id="provisional-signup-completed-title">ご登録頂きありがとうございます。</h2>
+    <div id="provisional-signup-completed-description">
+        ご登録頂きありがとうございます。<br>
+        <spqn class="font-warning">まだ登録は完了していません。</spqn><br>
+        <span class="font-bold">{{email}}</span> 宛に本登録用のURLを送信いたしました。<br>
+        メールをご確認のうえ、登録を完了させてください。
+    </div>
+</div>
+{% endblock %}
