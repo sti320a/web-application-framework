@@ -1,15 +1,15 @@
-﻿TO_ADDRESS: 123@test.com 
+﻿TO_ADDRESS: 123@gmail.com 
     
 SUBJECT: 本登録を完了しましょう。  
     
 BODY: 
-テストユーザー様 
+sample様 
  
 本サービスにご登録頂きありがとうございます。
  
 以下のリンクから本登録を完了しましょう。
  
-http://12345/signUpConfimr?p=abcdefg
+1dfeed83d1ed47529062c31586fffbe2
  
  
 今後とも当サービスをよろしくお願いいたします。

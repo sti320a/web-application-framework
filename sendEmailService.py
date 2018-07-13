@@ -42,7 +42,7 @@ def sendEmailMock(TO_ADDRESS, SUBJECT, BODY):
     \nSUBJECT: {}  
     \nBODY: {}
     """.format(TO_ADDRESS,SUBJECT,BODY)
-    file = codecs.open("../emailOutPutSample/emailOutPut.txt", "w", "utf_8_sig")
+    file = codecs.open("./emailOutPutSample/emailOutPut.txt", "w", "utf_8_sig")
     file.write(content)
     file.close()
     return True

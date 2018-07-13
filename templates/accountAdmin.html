@@ -1,0 +1,16 @@
+{% extends "layout.html" %} 
+{% block body %}
+<!-- copy html from here -->
+<!-- using "accountAdmin.html" from here -->
+<div id="account-admin-container">
+    <div id="user-list-container">
+        <ul>
+        {% for user in user_list: %}
+        <li>{{user}}</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+<!-- using "accountAdmin.html" to here -->
+<!-- copy html to here -->
+{% endblock %}

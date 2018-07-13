@@ -3,7 +3,11 @@
 
 from flask import Flask, session, redirect, render_template, request
 import signUpService
+import dao
 import const
+
+db_file_name = const.DB_FILE_NAME
+
 
 app = Flask(__name__)
 
@@ -25,8 +29,8 @@ def signupUserProvisionally():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        signUpService.signUpUserProvisionally(username, email, password, const.DB_FILE_NAME)
-        return render_template('provisional_signup_completed.html', email=email)
+        signUpService.signUpUserProvisionally(username, email, password, db_file_name)
+        return render_template('provisionalSignupCompleted.html', email=email)
     else:
         return redirect('/signup')
 
@@ -46,6 +50,12 @@ def showUserView():
 @app.route('/edit_profile')
 def showEditProfileView():
     return render_template('editProfile.html')
+
+@app.route('/AFewbeon32GhOi90ZXAccountAdmin')
+def showAccountAdminView():
+    user_list = dao.getUserList()
+    print(user_list)
+    return render_template('accountAdmin.html', user_list=user_list)
 
 
 if __name__ == '__main__':

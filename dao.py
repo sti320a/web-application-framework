@@ -1,8 +1,11 @@
 import os
 import sqlite3
 import sys
+import const
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+db_file_name = const.DB_FILE_NAME
 
 """
 Basic SQL Function
@@ -57,13 +60,13 @@ def deleteAll(table_name, db_file_name):
 def select(statement, db_file_name, console):
     conn = sqlite3.connect(ROOT_DIR+'/db/{}.db'.format(db_file_name))
     c = conn.cursor()
-    sqlResult = c.execute(statement)
+    sql_result = c.execute(statement)
     conn.commit()
     result = []
-    for row in sqlResult:
+    for row in sql_result:
         result.append(row)
     if(console):
-        for row in sqlResult:
+        for row in sql_result:
             print(row)
     conn.close()
     return result
@@ -72,11 +75,11 @@ def select(statement, db_file_name, console):
 def selectReturn(statement, db_file_name, console):
     conn = sqlite3.connect(ROOT_DIR+'/db/{}.db'.format(db_file_name))
     c = conn.cursor()
-    sqlResult = c.execute(statement)
+    sql_result = c.execute(statement)
     conn.commit()
 
     result = []
-    for row in sqlResult:
+    for row in sql_result:
         result.append(row)
         if(console):print(row)
     conn.close()
@@ -91,22 +94,29 @@ def getNewId4Insert(table_name, db_file_name):
     userList = selectReturn("SELECT * FROM {}".format(table_name), db_file_name, False);
     if len(userList) == 0:
         return 1
-    newUserId = userList[-1][0] + 1
-    if newUserId==None:
+    new_user_id = userList[-1][0] + 1
+    if new_user_id==None:
         return False        
-    return newUserId
+    return new_user_id
+
+"""
+create user table
+"""
+def createUserTableIfNotExist(db_file_name):
+    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64), email_confirm_pass varchar(64))", db_file_name)
+
 
 """
 Provisionally User Sign up  
 """
 def insertProvisionalUser2Db(username, email, auth_key, email_confirm_pass, db_file_name):
-    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64), email_confirm_pass varchar(64))", db_file_name)
+    createUserTableIfNotExist(db_file_name)
     id = getNewId4Insert("provisionalUser",db_file_name)
     insert("INSERT INTO provisionalUser (id, name, email, auth_key, email_confirm_pass) VALUES (?,?,?,?,?)", [id, username, email, auth_key, email_confirm_pass], db_file_name)
     return True
 
 def deleteProvisionalUser2Db(username, email, db_file_name):
-    create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    createUserTableIfNotExist(db_file_name)
     delete("DELETE FROM provisionalUser WHERE name=? AND email = ?", [username, email], db_file_name)
     return True
 
@@ -114,7 +124,7 @@ def deleteProvisionalUser2Db(username, email, db_file_name):
 User Sign up
 """
 def insertUser2Db(username, email, auth_key, db_file_name):
-    create("CREATE TABLE IF NOT EXISTS user (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    createUserTableIfNotExist(db_file_name)
     id = getNewId4Insert("user", db_file_name)
     insert("INSERT INTO user (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], db_file_name)
     return True
@@ -123,8 +133,14 @@ def insertUser2Db(username, email, auth_key, db_file_name):
 Delete user
 """
 def deleteUserFromDb(username, email, auth_key, db_file_name):
-    create("CREATE TABLE IF NOT EXISTS user (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64))", db_file_name)
+    createUserTableIfNotExist(db_file_name)
     delete("DELETE FROM user WHERE name=? AND email=? AND auth_key=?", [username, email, auth_key], db_file_name)
     return True
 
- 
+"""
+Account Admin Show User List
+"""
+def getUserList():
+    createUserTableIfNotExist(db_file_name)
+    user_list = selectReturn("SELECT id, name, email FROM provisionalUser", db_file_name, True)
+    return user_list

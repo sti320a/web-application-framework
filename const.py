@@ -8,6 +8,6 @@ EMAIL_BODY_SIGNUP_CONFIRM = """
 {}様 \n 
 本サービスにご登録頂きありがとうございます。\n 
 以下のリンクから本登録を完了しましょう。\n 
-{}\n \n 
+https://sample.com/signup?p={}\n \n 
 今後とも当サービスをよろしくお願いいたします。
 """
