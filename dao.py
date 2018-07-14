@@ -67,7 +67,7 @@ def select(statement, db_file_name, console):
         result.append(row)
     if(console):
         for row in sql_result:
-            print(row)
+            print("dao.select:"+row)
     conn.close()
     return result
     
@@ -81,7 +81,7 @@ def selectReturn(statement, db_file_name, console):
     result = []
     for row in sql_result:
         result.append(row)
-        if(console):print(row)
+        if(console):print("dao.selectReturn:" + str(row))
     conn.close()
 
     return result
@@ -102,21 +102,23 @@ def getNewId4Insert(table_name, db_file_name):
 """
 create user table
 """
-def createUserTableIfNotExist(db_file_name):
+def createProvisionalUserTableIfNotExist(db_file_name):
     create("CREATE TABLE IF NOT EXISTS provisionalUser (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64), email_confirm_pass varchar(64))", db_file_name)
 
+def createUserTableIfNotExist(db_file_name):
+    create("CREATE TABLE IF NOT EXISTS user (id int primary key, name varchar(64), email varchar(64), auth_key varchar(64), email_confirm_pass varchar(64))", db_file_name)
 
 """
 Provisionally User Sign up  
 """
 def insertProvisionalUser2Db(username, email, auth_key, email_confirm_pass, db_file_name):
-    createUserTableIfNotExist(db_file_name)
+    createProvisionalUserTableIfNotExist(db_file_name)
     id = getNewId4Insert("provisionalUser",db_file_name)
     insert("INSERT INTO provisionalUser (id, name, email, auth_key, email_confirm_pass) VALUES (?,?,?,?,?)", [id, username, email, auth_key, email_confirm_pass], db_file_name)
     return True
 
 def deleteProvisionalUser2Db(username, email, db_file_name):
-    createUserTableIfNotExist(db_file_name)
+    createProvisionalUserTableIfNotExist(db_file_name)
     delete("DELETE FROM provisionalUser WHERE name=? AND email = ?", [username, email], db_file_name)
     return True
 
@@ -141,6 +143,15 @@ def deleteUserFromDb(username, email, auth_key, db_file_name):
 Account Admin Show User List
 """
 def getUserList():
-    createUserTableIfNotExist(db_file_name)
-    user_list = selectReturn("SELECT id, name, email FROM provisionalUser", db_file_name, True)
+    createProvisionalUserTableIfNotExist(db_file_name)
+    sql_result = selectReturn("SELECT id, name, email FROM provisionalUser", db_file_name, True)
+
+    user_list = [] 
+    for row in sql_result:
+        user_info = {}
+        user_info["id"] = row[0]
+        user_info["name"] = row[1]
+        user_info["email"] = row[2]        
+        user_list.append(user_info)
+
     return user_list

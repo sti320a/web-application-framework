@@ -4,11 +4,21 @@
 <!-- using "accountAdmin.html" from here -->
 <div id="account-admin-container">
     <div id="user-list-container">
-        <ul>
+        <h2>Provisional User List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>email</th>
+            </tr>
         {% for user in user_list: %}
-        <li>{{user}}</li>
+        <tr>
+            <td>{{user["id"]}}</td>
+            <td>{{user["name"]}}</td>
+            <td>{{user["email"]}}</td>
+        <tr>
         {% endfor %}
-        </ul>
+        </table>
     </div>
 </div>
 <!-- using "accountAdmin.html" to here -->

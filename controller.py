@@ -54,7 +54,7 @@ def showEditProfileView():
 @app.route('/AFewbeon32GhOi90ZXAccountAdmin')
 def showAccountAdminView():
     user_list = dao.getUserList()
-    print(user_list)
+    print("controller.showAccountAdminView:"+str(user_list))
     return render_template('accountAdmin.html', user_list=user_list)
 
 
