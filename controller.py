@@ -29,6 +29,12 @@ def signupUserProvisionally():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+
+        # validation check
+        validation_results = signUpService.validationCheck4InsertProvisionalUser(username, email, password);
+        if len(validation_results) >= 1:
+            return render_template('signup.html', validation_results=validation_results, username=username, email=email)    
+
         signUpService.signUpUserProvisionally(username, email, password, db_file_name)
         return render_template('provisionalSignupCompleted.html', email=email)
     else:

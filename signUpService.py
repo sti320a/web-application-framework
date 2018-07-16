@@ -8,10 +8,9 @@ import const
 def signUpUserProvisionally(username, email, password, db_file_name):
     
     # validation check
-    if validationCheck4InsertProvisionalUser(username, email, password) == False:
-        print("Validation error")
+    if len(validationCheck4InsertProvisionalUser(username, email, password)) >= 1:
         return False
-    
+
     # password to hash
     auth_key = covert2AuthKeyFromPassword(password)
     if auth_key == None:
@@ -38,27 +37,23 @@ def sendEmail4SignUpUser(username, email, email_confirm_pass):
 
 
 def validationCheck4InsertProvisionalUser(username, email, password):
+    error = []
     if (username == None) or (username == ""):
-        print("Username is empty")        
-        return False
+        error.append("ユーザー名を入力してください。")        
     
     if (email == None) or (email == ""):
-        print("Email is empty")
-        return False
+        error.append("メールアドレスを入力してください。")
     
     if (password == None) or (password == ""):
-        print("Password is empty")
-        return False
+        error.append("パスワードを入力してください。")
 
     if len(password) <= 8:
-        print("Password is too short")
-        return False
+        error.append("パスワードが短すぎます。パスワードは8文字以上に設定してください。")
         
     if ("@" not in email) or ("." not in email):
-        print("This email is invalid")
-        return False
+        error.append("メールアドレスが正しく入力されているか確認してください。")
 
-    return True
+    return error
 
 
 def covert2AuthKeyFromPassword(password):

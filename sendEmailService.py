@@ -6,6 +6,9 @@ from email.mime.text import MIMEText
 from email.utils import formatdate
 import const
 import codecs
+import os
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def createMessage(from_addr, to_addrs,bcc_addrs, subject, body):
     msg = MIMEText(body)
@@ -42,7 +45,8 @@ def sendEmailMock(TO_ADDRESS, SUBJECT, BODY):
     \nSUBJECT: {}  
     \nBODY: {}
     """.format(TO_ADDRESS,SUBJECT,BODY)
-    file = codecs.open("./emailOutPutSample/emailOutPut.txt", "w", "utf_8_sig")
+    print(ROOT_DIR)
+    file = codecs.open(ROOT_DIR+"/emailOutputSample/emailOutput.txt", "w", "utf_8_sig")
     file.write(content)
     file.close()
     return True
