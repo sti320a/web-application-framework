@@ -142,7 +142,7 @@ def deleteUserFromDb(username, email, auth_key, db_file_name):
 """
 Account Admin Show User List
 """
-def getUserList():
+def getProvisionalUserList():
     createProvisionalUserTableIfNotExist(db_file_name)
     sql_result = selectReturn("SELECT id, name, email FROM provisionalUser", db_file_name, True)
 
@@ -155,3 +155,18 @@ def getUserList():
         user_list.append(user_info)
 
     return user_list
+
+def getUserList():
+    createProvisionalUserTableIfNotExist(db_file_name)
+    sql_result = selectReturn("SELECT id, name, email FROM user", db_file_name, True)
+
+    user_list = [] 
+    for row in sql_result:
+        user_info = {}
+        user_info["id"] = row[0]
+        user_info["name"] = row[1]
+        user_info["email"] = row[2]        
+        user_list.append(user_info)
+
+    return user_list
+

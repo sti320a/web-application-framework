@@ -9,7 +9,7 @@ BODY:
  
 以下のリンクから本登録を完了しましょう。
  
-https://sample.com/signup?p=http://12345/signUpConfimr?p=abcdefg
+https://sample.com/signup?p=http://12345/signUpConfimr?p=5b3e3d5c800a4e64924bc469a65a852e
  
  
 今後とも当サービスをよろしくお願いいたします。

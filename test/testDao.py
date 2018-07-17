@@ -63,6 +63,6 @@ assert(dao.insertProvisionalUser2Db("sample_test_2", "sample2@test.com", "123abc
 assert(dao.insertProvisionalUser2Db("sample_test_3", "sample3@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
 assert(dao.insertProvisionalUser2Db("sample_test_4", "sample4@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
 assert(dao.insertProvisionalUser2Db("sample_test_5", "sample5@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
-assert(len(dao.getUserList()) == 5)
+assert(len(dao.getProvisionalUserList()) == 5)
 
 print("Finish All Test.")
