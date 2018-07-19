@@ -2,6 +2,7 @@ import os
 import sqlite3
 import sys
 import const
+import pprint
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -131,6 +132,15 @@ def insertUser2Db(username, email, auth_key, db_file_name):
     insert("INSERT INTO user (id, name, email, auth_key) VALUES (?,?,?,?)", [id, username, email, auth_key], db_file_name)
     return True
 
+
+def signUp(email_confirm_pass):
+    if isProvisionalUser(email_confirm_pass) == False:
+        return False
+    user_info = getUserInfoFromProvisionalUserDb(email_confirm_pass)
+    insertUser2Db(user_info["name"], user_info["email"], user_info["auth_key"], db_file_name)
+    return True
+
+
 """
 Delete user
 """
@@ -169,4 +179,51 @@ def getUserList():
         user_list.append(user_info)
 
     return user_list
+
+"""
+from Provisonal User to User
+"""
+
+def isProvisionalUser(email_confirm_pass):
+    createProvisionalUserTableIfNotExist(db_file_name)
+    sql_result = selectReturn("SELECT id FROM provisionalUser WHERE email_confirm_pass='{}'".format(email_confirm_pass), db_file_name, False)
+    user_list = [] 
+    for row in sql_result:
+        user_list.append(row)
+
+    if len(user_list) <= 0 :
+        return False
+    return True
+
+def getUserInfoFromProvisionalUserDb(email_confirm_pass):
+    createProvisionalUserTableIfNotExist(db_file_name)
+    sql_result = selectReturn("SELECT id, name, email, auth_key FROM provisionalUser WHERE email_confirm_pass='{}'".format(email_confirm_pass), db_file_name, False)
+    temp_list = [] 
+    for row in sql_result:
+        temp_list.append(row)
+
+    user_info = {}
+    user_info["id"] = temp_list[0][0]
+    user_info["name"] = temp_list[0][1]
+    user_info["email"] = temp_list[0][2]
+    user_info["auth_key"] = temp_list[0][3]
+
+    print(user_info)
+    return user_info
+
+"""
+Login and Check User Existing
+"""
+
+def isUser(auth_key):
+    createUserTableIfNotExist(db_file_name)
+    sql_result = selectReturn("SELECT id FROM provisionalUser WHERE auth_key='{}'".format(auth_key), db_file_name, False)
+    user_list = [] 
+    for row in sql_result:
+        user_list.append(row)
+    if len(user_list) <= 0 :
+        return False
+    return True
+
+    
 

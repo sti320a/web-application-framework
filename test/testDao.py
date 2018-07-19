@@ -58,11 +58,28 @@ assert(dao.deleteUserFromDb("name_test_2", "email2@test.com", "789abc012def", te
 assert(len(dao.select("SELECT * FROM user", test_user_db, False)) == 0)
 
 print("Checking select and return user's info list from test user db...")
-assert(dao.insertProvisionalUser2Db("sample_test_1", "sample@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
-assert(dao.insertProvisionalUser2Db("sample_test_2", "sample2@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
-assert(dao.insertProvisionalUser2Db("sample_test_3", "sample3@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
-assert(dao.insertProvisionalUser2Db("sample_test_4", "sample4@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
-assert(dao.insertProvisionalUser2Db("sample_test_5", "sample5@test.com", "123abc456def","oneTimePassforUserEmailComfirm", test_user_db) == True)    
+assert(dao.insertProvisionalUser2Db("sample_test_1", "sample1@test.com", "sample_auth_key1","oneTimePassforUserEmailComfirm1", test_user_db) == True)    
+assert(dao.insertProvisionalUser2Db("sample_test_2", "sample2@test.com", "sample_auth_key2","oneTimePassforUserEmailComfirm2", test_user_db) == True)    
+assert(dao.insertProvisionalUser2Db("sample_test_3", "sample3@test.com", "sample_auth_key3","oneTimePassforUserEmailComfirm3", test_user_db) == True)    
+assert(dao.insertProvisionalUser2Db("sample_test_4", "sample4@test.com", "sample_auth_key4","oneTimePassforUserEmailComfirm4", test_user_db) == True)    
+assert(dao.insertProvisionalUser2Db("sample_test_5", "sample5@test.com", "sample_auth_key5","oneTimePassforUserEmailComfirm5", test_user_db) == True)    
 assert(len(dao.getProvisionalUserList()) == 5)
+
+
+print("Checking isProvisionalUser...")
+assert(dao.isProvisionalUser("falseconfirmpass") == False)
+assert(dao.isProvisionalUser("oneTimePassforUserEmailComfirm1") == True)
+assert(dao.isProvisionalUser("oneTimePassforUserEmailComfirm5") == True)
+
+print("Cheking getUserInfoFromProvisionalUserDb...")
+assert(dao.getUserInfoFromProvisionalUserDb("oneTimePassforUserEmailComfirm1")["name"] == "sample_test_1")
+assert(dao.getUserInfoFromProvisionalUserDb("oneTimePassforUserEmailComfirm1")["email"] == "sample1@test.com")
+assert(dao.getUserInfoFromProvisionalUserDb("oneTimePassforUserEmailComfirm1")["auth_key"] == "sample_auth_key1")
+
+print("Checking SingUpUser...")
+assert(dao.signUp("oneTimePassforUserEmailComfirm1") == True)
+assert(dao.isUser("sample_auth_key1") == True)
+assert(dao.signUp("oneTimePassforUserEmailComfirm5") == True)
+assert(dao.isUser("sample_auth_key5") == True)
 
 print("Finish All Test.")

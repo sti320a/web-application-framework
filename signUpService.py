@@ -56,11 +56,6 @@ def validationCheck4InsertProvisionalUser(username, email, password):
     return error
 
 
-
-def isSignUpUserProvisionally(confirm_pass):    
-    return None
-
-
 def covert2AuthKeyFromPassword(password):
     if password == None:
         return False
