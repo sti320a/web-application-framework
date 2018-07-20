@@ -3,6 +3,7 @@
 
 from flask import Flask, session, redirect, render_template, request
 import signUpService
+import loginService
 import dao
 import const
 
@@ -18,6 +19,23 @@ def showIndexView():
 @app.route('/login')
 def showLoginView():
     return render_template('login.html')
+
+@app.route('/login_check', methods=['POST'])
+def loginCheck():
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        login_info = loginService.login(email, password)
+
+        if login_info != False:
+            print("login seccess")
+            return redirect("/?logined")
+        else:
+            print("Cannot get login_info")
+            return redirect("/login")
+    else:
+        print("method is invalid")
+        return redirect("/login")
 
 @app.route('/signup')
 def showSignUpView():

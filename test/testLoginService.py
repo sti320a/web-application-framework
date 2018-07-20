@@ -20,9 +20,11 @@ assert(dao.signUp("oneTimePassforUserEmailComfirm") == True)
 print("Complete preparing.")
 
 print("Checking login...")
-assert(ls.login("login@test.com", "sample_password") == True)
-
-
+assert(ls.login("login@test.com", "sample_password")["name"] == "login_test_user")
+assert(ls.login("login@test.com", "sample_password")["email"] == "login@test.com")
+assert(ls.login("false@test.com", "sample_password") == False)
+assert(ls.login("login@test.com", "fail_password") == False)
+assert(ls.login("false@test.com", "fail_password") == False)
 
 print("Finish all test.")
 

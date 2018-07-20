@@ -208,7 +208,6 @@ def getUserInfoFromProvisionalUserDb(email_confirm_pass):
     user_info["email"] = temp_list[0][2]
     user_info["auth_key"] = temp_list[0][3]
 
-    print(user_info)
     return user_info
 
 """
@@ -217,7 +216,7 @@ Login and Check User Existing
 
 def isUser(email, auth_key):
     createUserTableIfNotExist(db_file_name)
-    sql_result = selectReturn("SELECT id FROM provisionalUser WHERE email='{}' AND auth_key='{}'".format(email, auth_key), db_file_name, False)
+    sql_result = selectReturn("SELECT id FROM user WHERE email='{}' AND auth_key='{}'".format(email, auth_key), db_file_name, False)
     user_list = [] 
     for row in sql_result:
         user_list.append(row)
@@ -225,5 +224,20 @@ def isUser(email, auth_key):
         return False
     return True
 
-    
+def getUserInfo(email, auth_key):
+    createUserTableIfNotExist(db_file_name)
+    sql_result = selectReturn("SELECT id, name, email, auth_key FROM user WHERE email='{}' AND auth_key='{}'".format(email, auth_key), db_file_name, False)
+    temp_list = [] 
+    for row in sql_result:
+        temp_list.append(row)
+
+    user_info = {}
+    user_info["id"] = temp_list[0][0]
+    user_info["name"] = temp_list[0][1]
+    user_info["email"] = temp_list[0][2]
+    user_info["auth_key"] = temp_list[0][3]
+
+    #print(user_info)
+    return user_info
+
 

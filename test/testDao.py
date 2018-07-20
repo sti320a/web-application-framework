@@ -82,4 +82,8 @@ assert(dao.isUser("sample1@test.com", "sample_auth_key1") == True)
 assert(dao.signUp("oneTimePassforUserEmailComfirm5") == True)
 assert(dao.isUser("sample5@test.com", "sample_auth_key5") == True)
 
+print("Checking getUserInfo...")
+assert(dao.getUserInfo("sample1@test.com", "sample_auth_key1")["name"] == "sample_test_1")
+assert(dao.getUserInfo("sample1@test.com", "sample_auth_key1")["email"] == "sample1@test.com")
+
 print("Finish All Test.")
