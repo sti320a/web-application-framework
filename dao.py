@@ -215,9 +215,9 @@ def getUserInfoFromProvisionalUserDb(email_confirm_pass):
 Login and Check User Existing
 """
 
-def isUser(auth_key):
+def isUser(email, auth_key):
     createUserTableIfNotExist(db_file_name)
-    sql_result = selectReturn("SELECT id FROM provisionalUser WHERE auth_key='{}'".format(auth_key), db_file_name, False)
+    sql_result = selectReturn("SELECT id FROM provisionalUser WHERE email='{}' AND auth_key='{}'".format(email, auth_key), db_file_name, False)
     user_list = [] 
     for row in sql_result:
         user_list.append(row)
