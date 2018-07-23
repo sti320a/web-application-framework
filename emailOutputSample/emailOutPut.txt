@@ -1,15 +1,15 @@
-﻿TO_ADDRESS: 123@gmail.com 
+﻿TO_ADDRESS: a@gmail.com 
     
 SUBJECT: 本登録を完了しましょう。  
     
 BODY: 
-サンプル様 
+SAMPLE様 
  
 本サービスにご登録頂きありがとうございます。
  
 以下のリンクから本登録を完了しましょう。
  
-https://sample.com/signup?p=d4e2216783d042708b0a1ca3563069ec
+http://127.0.0.1:5000/signup?p=0985fc15c71b4d98804acdc284083d73
  
  
 今後とも当サービスをよろしくお願いいたします。
