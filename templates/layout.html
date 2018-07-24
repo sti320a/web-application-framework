@@ -23,26 +23,21 @@
         </div>
         <div id="header-right">
             <ul>
-                <li>    
-                    {% if username == None or username == "": %}
-                        <a href="/login">Login</a>
-                    {% endif %}
+                {% if username == False: %}
+                <li>
+                    <a href="/signup">SignUp</a>
                 </li>
                 <li>
-                    {% if username != None and username != "": %}
-                        <a href="/logout">Logout</a>
-                    {% endif %}
+                    <a href="/login">Login</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="/logout">Logout</a>
                 </li>
                 <li>
-                    {% if username == None or username == "": %}
-                        <a href="/signup">SignUp</a>
-                    {% endif %}
-                </li>
-                <li>
-                    {% if username != None and username != "": %}
                     <a href="/account">{{username}}</a>
-                    {% endif %}
                 </li>
+                {% endif %}
             </ul>
         </div>
         <div class="clear"></div>

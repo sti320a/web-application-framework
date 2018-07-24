@@ -15,21 +15,15 @@ app.secret_key = "vjabpivp3rubvpiebvASDwibp"
 
 @app.route('/')
 def showIndexView():
-    if session.get("username") != None and session.get("username") != "":
-        username = session["username"]
-        print("username:"+username)
-        return render_template("index.html", username=username)
-    return render_template("index.html")
+    return render_template("index.html", username=getLoginStatus())
 
 @app.route('/login')
 def showLoginView():
-    return render_template('login.html')
+    return render_template('login.html', username=getLoginStatus())
 
 @app.route('/logout')
 def logout():
-    if session.get("username") != None and session.get("username") != "":
-        session.pop("username", None)
-    return render_template("index.html", username=None)
+    return render_template("index.html", username=getLoginStatus())
 
 @app.route('/login_check', methods=['POST'])
 def loginCheck():
@@ -39,20 +33,17 @@ def loginCheck():
         login_info = loginService.login(email, password)
 
         if login_info != False:
-            print("login seccess")
             session["username"] = login_info["name"]
-            print(login_info["name"])
             return redirect("/?logined")
         else:
-            print("Cannot get login_info")
             return redirect("/login")
     else:
-        print("method is invalid")
         return redirect("/login")
 
 @app.route('/signup', methods=['GET'])
 def showSignUpView():
-    return render_template('signup.html')
+    return render_template('signup.html', username=getLoginStatus())
+
 
 @app.route('/signup_complete')
 def signUpConfirm():
@@ -64,13 +55,12 @@ def signUpConfirm():
             email = user_info['email']
             auth_key = user_info['auth_key']
             dao.insertUser2Db(name, email, auth_key, db_file_name)
-            print("sigunp_completed")
         else:
-            print("signup_failed")
-            return render_template("signup_fail.html")
+            return render_template("signup_fail.html",username=getLoginStatus())
     else:
         print("method is invalid")
-    return render_template('signup_complete.html')
+    return render_template('signup_complete.html', username=getLoginStatus())
+
 
 @app.route('/provisional_signup', methods=['POST'])
 def signupUserProvisionally():
@@ -82,35 +72,43 @@ def signupUserProvisionally():
         # validation check
         validation_results = signUpService.validationCheck4InsertProvisionalUser(username, email, password);
         if len(validation_results) >= 1:
-            return render_template('signup.html', validation_results=validation_results, username=username, email=email)    
+            return render_template('signup.html', validation_results=validation_results, username=getLoginStatus(), email=email)    
 
         signUpService.signUpUserProvisionally(username, email, password, db_file_name)
-        return render_template('provisionalSignupCompleted.html', email=email)
+        return render_template('provisionalSignupCompleted.html', username=getLoginStatus(), email=email)
     else:
         return redirect('/signup')
 
 
 @app.route('/contents')
 def showContentsUpView():
-    return render_template('contents.html')
+    return render_template('contents.html', username=getLoginStatus())
 
 @app.route('/account')
 def showAccountView():
-    return render_template('account.html')
+    return render_template('account.html', username=getLoginStatus())
 
 @app.route('/user')
 def showUserView():
-    return render_template('user.html')
+    return render_template('user.html', username=getLoginStatus())
 
 @app.route('/edit_profile')
 def showEditProfileView():
-    return render_template('editProfile.html')
+    return render_template('editProfile.html', username=getLoginStatus())
 
 @app.route('/AFewbeon32GhOi90ZXAccountAdmin')
 def showAccountAdminView():
     user_list = dao.getUserList()
-    print("controller.showAccountAdminView:"+str(user_list))
-    return render_template('accountAdmin.html', user_list=user_list)
+    return render_template('accountAdmin.html', username=getLoginStatus(), user_list=user_list)
+
+
+def getLoginStatus():
+    if session.get("username") != None and session.get("username") != "":
+        username = session["username"]
+        return username
+    else:
+        return False
+
 
 
 if __name__ == '__main__':
