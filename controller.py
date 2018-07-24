@@ -15,15 +15,16 @@ app.secret_key = "vjabpivp3rubvpiebvASDwibp"
 
 @app.route('/')
 def showIndexView():
-    return render_template("index.html", username=getLoginStatus())
+    return render_template("index.html", username=getLoginUser())
 
 @app.route('/login')
 def showLoginView():
-    return render_template('login.html', username=getLoginStatus())
+    return render_template('login.html', username=getLoginUser())
 
 @app.route('/logout')
 def logout():
-    return render_template("index.html", username=getLoginStatus())
+    session.pop("username", None)
+    return render_template("index.html", username=getLoginUser())
 
 @app.route('/login_check', methods=['POST'])
 def loginCheck():
@@ -34,6 +35,7 @@ def loginCheck():
 
         if login_info != False:
             session["username"] = login_info["name"]
+            session["userid"] = login_info["id"]
             return redirect("/?logined")
         else:
             return redirect("/login")
@@ -42,7 +44,7 @@ def loginCheck():
 
 @app.route('/signup', methods=['GET'])
 def showSignUpView():
-    return render_template('signup.html', username=getLoginStatus())
+    return render_template('signup.html', username=getLoginUser())
 
 
 @app.route('/signup_complete')
@@ -56,10 +58,10 @@ def signUpConfirm():
             auth_key = user_info['auth_key']
             dao.insertUser2Db(name, email, auth_key, db_file_name)
         else:
-            return render_template("signup_fail.html",username=getLoginStatus())
+            return render_template("signup_fail.html",username=getLoginUser())
     else:
         print("method is invalid")
-    return render_template('signup_complete.html', username=getLoginStatus())
+    return render_template('signup_complete.html', username=getLoginUser())
 
 
 @app.route('/provisional_signup', methods=['POST'])
@@ -72,43 +74,49 @@ def signupUserProvisionally():
         # validation check
         validation_results = signUpService.validationCheck4InsertProvisionalUser(username, email, password);
         if len(validation_results) >= 1:
-            return render_template('signup.html', validation_results=validation_results, username=getLoginStatus(), email=email)    
+            return render_template('signup.html', validation_results=validation_results, username=getLoginUser(), email=email)    
 
         signUpService.signUpUserProvisionally(username, email, password, db_file_name)
-        return render_template('provisionalSignupCompleted.html', username=getLoginStatus(), email=email)
+        return render_template('provisionalSignupCompleted.html', username=getLoginUser(), email=email)
     else:
         return redirect('/signup')
 
 
 @app.route('/contents')
 def showContentsUpView():
-    return render_template('contents.html', username=getLoginStatus())
+    return render_template('contents.html', username=getLoginUser())
 
 @app.route('/account')
 def showAccountView():
-    return render_template('account.html', username=getLoginStatus())
+    return render_template('account.html', username=getLoginUser())
 
 @app.route('/user')
 def showUserView():
-    return render_template('user.html', username=getLoginStatus())
+    return render_template('user.html', username=getLoginUser())
 
 @app.route('/edit_profile')
 def showEditProfileView():
-    return render_template('editProfile.html', username=getLoginStatus())
+    return render_template('editProfile.html', username=getLoginUser())
 
 @app.route('/AFewbeon32GhOi90ZXAccountAdmin')
 def showAccountAdminView():
     user_list = dao.getUserList()
-    return render_template('accountAdmin.html', username=getLoginStatus(), user_list=user_list)
+    return render_template('accountAdmin.html', username=getLoginUser(), user_list=user_list)
 
 
-def getLoginStatus():
+def getLoginUser():
     if session.get("username") != None and session.get("username") != "":
         username = session["username"]
         return username
     else:
         return False
 
+def getLoginUserid():
+    if session.get("userid") != None and session.get("userid") != "":
+        userid = session["userid"]
+        return userid
+    else:
+        return False
 
 
 if __name__ == '__main__':
