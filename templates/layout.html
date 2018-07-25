@@ -8,6 +8,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="http://fb.me/react-0.13.3.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.13.3.js"></script>
     <link rel="stylesheet" href="/static/stylesheet.css">
 </head>
 
@@ -17,7 +19,7 @@
         <div id="header-left">
             <ul>
                 <li>
-                    <a href="/">INDEX</a>
+                    <a href="/">Something</a>
                 </li>
             </ul>
         </div>
@@ -25,14 +27,14 @@
             <ul>
                 {% if username == False: %}
                 <li>
-                    <a href="/signup">SignUp</a>
+                    <a href="/signup">新規登録</a>
                 </li>
                 <li>
-                    <a href="/login">Login</a>
+                    <a href="/login">ログイン</a>
                 </li>
                 {% else %}
                 <li>
-                    <a href="/logout">Logout</a>
+                    <a href="/logout">ログアウト</a>
                 </li>
                 <li>
                     <a href="/account">{{userid}}{{username}}</a>

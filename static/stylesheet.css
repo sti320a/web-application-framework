@@ -2,6 +2,17 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+    font-family: 'Noto Sans JP';
+    letter-spacing: 1px;
+    color: #555;
+    font-size: 16px;
+    word-break: break-all;
+}
+
+h1{
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin: 10px 0;
 }
 
 .clear{
@@ -35,6 +46,32 @@ header{
     list-style: none;
     margin: 0 10px 0 0;
     padding: 10px 0 10px 0;
+}
+
+
+
+/* login form */
+.login-form{
+    margin: 70px auto;
+    width: 500px;
+}
+
+.login-form button{
+    width: 100%;
+}
+
+/* signup form */
+.signup-form{
+    margin: 70px auto;
+    width: 500px;
+}
+
+.signup-form .form-group{
+    margin: 10px 0 10px 0;
+}
+
+.signup-form button{
+    width: 100%;
 }
 
 /* main contents list */

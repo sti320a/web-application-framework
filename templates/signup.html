@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
-<form action="provisional_signup" method="post">
-    <h1>Sign up</h1>
+<form action="provisional_signup" method="post" class="signup-form">
+    <h1>新規登録</h1>
     {% if validation_results != None: %}
     <div class="form-validation-error-container">
         <ul>
@@ -11,29 +11,26 @@
     </div>
     {% endif %}
     <div class="form-group">
-        <label>Email</label>
         {% if email != None: %}
-        <input name="email" type="email" class="form-control" placeholder="Enter E-mail" value="{{email}}" autofocus>
+        <input name="email" type="email" class="form-control" placeholder="メールアドレス" value="{{email}}" required autofocus>
         {% else %}
-        <input name="email" type="email" class="form-control" placeholder="Enter E-mail" value="" autofocus>
+        <input name="email" type="email" class="form-control" placeholder="メールアドレス" value="" required autofocus>
         {% endif %}
     </div>
     <div class="form-group">
-        <label>Password</label>
-        <input name="password" type="password" class="form-control" placeholder="Enter password" value="" autofocus>
+            {% if username != None: %}
+            <input name="username" type="name" class="form-control" placeholder="ユーザーネーム" value="" required autofocus>
+            {% else %}
+            <input name="username" type="name" class="form-control" placeholder="ユーザーネーム" value="" required autofocus>
+            {% endif %}
+        </div>
+    <div class="form-group">
+        <input name="password" type="password" class="form-control" placeholder="パスワード" value="" required autofocus>
     </div>
     <div class="form-group">
-        <label>Retype Password</label>
-        <input type="password" class="form-control" placeholder="Retype password" value="" autofocus>
+        <input type="password" class="form-control" placeholder="パスワード（再入力）" value="" required autofocus>
     </div>
-    <div class="form-group">
-        <label>Username</label>
-        {% if username != None: %}
-        <input name="username" type="name" class="form-control" placeholder="Enter username" value="{{username}}" autofocus>
-        {% else %}
-        <input name="username" type="name" class="form-control" placeholder="Enter username" value="" autofocus>
-        {% endif %}
-    </div>
+    
     <button type="submit" class="btn btn-primary">登録する</button>
 </form>
 {% endblock %}
