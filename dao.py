@@ -255,6 +255,8 @@ def insertMovie(userid, title, comment, path):
     return True
 
 def getAllMovies():
+    
+    create("CREATE TABLE IF NOT EXISTS movie (id int, userid int, title varchar(64), comment varchar(2000), path varchar(200), created_at timestamp default (DATETIME('now', 'localtime')), updated_at timestamp default (DATETIME('now', 'localtime')))", "movie")
     sql_result = select("SELECT * FROM movie", "movie", True) 
 
     temp_list = [] 

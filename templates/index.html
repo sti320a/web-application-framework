@@ -4,6 +4,7 @@
 <div id="main-contents-list-container">
     {% for post in postList: %}
     <a href="contents?id={{post['id']}}" class="contents-box">{{post['title']}}</a>
+    <video controls width="100px" src="{{post['path']}}">{{post['path']}}</video>
     {% endfor %}
 </div>
 

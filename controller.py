@@ -6,8 +6,14 @@ import signUpService
 import loginService
 import dao
 import const
+import werkzeug
+import sys, os
+from datetime import datetime
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 db_file_name = const.DB_FILE_NAME
+MOVIE_UPLOAD_PATH = "./static/movie/"
 
 app = Flask(__name__)
 app.secret_key = "vjabpivp3rubvpiebvASDwibp"
@@ -15,7 +21,7 @@ app.secret_key = "vjabpivp3rubvpiebvASDwibp"
 
 @app.route('/')
 def showIndexView():
-    postList = dao.getAllPost()
+    postList = dao.getAllMovies()
     return render_template("index.html", username=getLoginUser(), postList=postList)
 
 @app.route('/login')
@@ -91,11 +97,26 @@ def showPostView():
 def runPost():    
     if request.method == "POST":
         
-        title = request.form['title']
-        contents = request.form['contents']
-        userid = getLoginUserid()
+        if 'upload_file' not in request.files:
+            print("uploadfile is None")
+            return redirect('/')
 
-        dao.insertPost(userid, title, contents)
+        file = request.files['upload_file']
+        fileName = file.filename
+
+        if '' == fileName:
+            print("filename is empty")
+            return redirect('/')
+
+        userid = getLoginUserid()
+        title = request.form['title']
+        comment = request.form['comment']
+        saveFileName = datetime.now().strftime("%Y%m%d_%H%M%S_") + werkzeug.utils.secure_filename(fileName)
+        file.save(os.path.join(MOVIE_UPLOAD_PATH, saveFileName))
+
+        dao.insertMovie(userid, title, comment,os.path.join(MOVIE_UPLOAD_PATH, saveFileName))
+
+        print("success upload")
 
         return redirect('/')
 
