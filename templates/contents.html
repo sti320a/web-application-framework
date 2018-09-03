@@ -3,17 +3,18 @@
 <!-- copy html from here -->
 <!-- using "contents.html" from here -->
 <div id="contents-container">
-    <h2 id="contents-title">Title</h2>
+    <h2 id="contents-title">{{contents_info['title']}}</h2>
     <div id="contents-header-container">
         <ul>
             <li><a href="user?uid=123">author</a></li>
-            <li>timeStamp</li>
+            <li>{{contents_info['updated_at']}}</li>
             <li>description</li>
         </ul>
     </div>
     <div class="clear"></div>
     <div id="contents-main-container">
-        <p>This inclueds main contents.</p>
+        <p>{{contents_info['comment']}}</p>
+        <video controls width="300px" height="200px" src="{{contents_info['path']}}">{{contents_info['path']}}</video>
     </div>
 </div>
 <!-- using "contents.html" to here -->

@@ -246,18 +246,46 @@ def getUserInfo(email, auth_key):
 Save user's post
 """
 
-def insertMovie(userid, title, comment, path):
+def createMovieDb(db_file_name):
+    create("CREATE TABLE IF NOT EXISTS movie (id int, userid int, title varchar(64), comment varchar(2000), path varchar(200), created_at timestamp default (DATETIME('now', 'localtime')), updated_at timestamp default (DATETIME('now', 'localtime')))", db_file_name)
+    return True
+
+def insertMovie(db_file_name, userid, title, comment, path):
     
-    create("CREATE TABLE IF NOT EXISTS movie (id int, userid int, title varchar(64), comment varchar(2000), path varchar(200), created_at timestamp default (DATETIME('now', 'localtime')), updated_at timestamp default (DATETIME('now', 'localtime')))", "movie")
-    id = getNewId4Insert("movie", "movie")
-    insert("INSERT INTO movie(id, userid, title, comment, path) VALUES(?,?,?,?,?)", [id,userid,title,comment,path], "movie")
+    createMovieDb(db_file_name)
+    id = getNewId4Insert("movie", db_file_name)
+    insert("INSERT INTO movie(id, userid, title, comment, path) VALUES(?,?,?,?,?)", [id,userid,title,comment,path], db_file_name)
 
     return True
 
-def getAllMovies():
-    
-    create("CREATE TABLE IF NOT EXISTS movie (id int, userid int, title varchar(64), comment varchar(2000), path varchar(200), created_at timestamp default (DATETIME('now', 'localtime')), updated_at timestamp default (DATETIME('now', 'localtime')))", "movie")
-    sql_result = select("SELECT * FROM movie", "movie", True) 
+def getContentsFromId(db_file_name, id):
+    createMovieDb(db_file_name)
+
+    sql_result = select("SELECT * FROM movie WHERE id={}".format(id), db_file_name, True)
+
+    temp_list = [] 
+    for row in sql_result:
+        temp_list.append(row)
+
+    post_list = []
+    for row in temp_list:
+        post = {}    
+        post["id"] = row[0]
+        post["userid"] = row[1]
+        post["title"] = row[2]
+        post["comment"] = row[3]
+        post["path"] = row[4]
+        post["created_at"] = row[5]
+        post["updated_at"] = row[6]
+        post_list.append(post)
+
+    return post_list[0]
+
+
+def getAllMovies(db_file_name):
+
+    createMovieDb(db_file_name)
+    sql_result = select("SELECT * FROM movie", db_file_name, True) 
 
     temp_list = [] 
     for row in sql_result:

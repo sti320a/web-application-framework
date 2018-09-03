@@ -5,9 +5,17 @@ import os
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 test_user_db = "testUserDb"
+test_movie_db = "testMovieDb" 
 
-if os.path.exists(ROOT_DIR+'/../db/{}.db'.format(test_user_db)):
-    os.remove(ROOT_DIR+'/../db/{}.db'.format(test_user_db))
+
+def deleteTestDb():
+    if os.path.exists(ROOT_DIR+'/../db/{}.db'.format(test_movie_db)):
+        os.remove(ROOT_DIR+'/../db/{}.db'.format(test_movie_db))
+
+    if os.path.exists(ROOT_DIR+'/../db/{}.db'.format(test_user_db)):
+        os.remove(ROOT_DIR+'/../db/{}.db'.format(test_user_db))
+
+deleteTestDb()
 
 print("Checking creating test user db...")
 assert(dao.create("CREATE TABLE IF NOT EXISTS test(id int, name varchar(64))", test_user_db) == True)
@@ -87,11 +95,16 @@ assert(dao.getUserInfo("sample1@test.com", "sample_auth_key1")["name"] == "sampl
 assert(dao.getUserInfo("sample1@test.com", "sample_auth_key1")["email"] == "sample1@test.com")
 
 print("Checking insertMovie...")
-assert(dao.insertMovie("1", "TestTest", "Hello, world!", "/movie/movie.mp4"))
+assert(dao.insertMovie(test_movie_db, "123", "TestTest", "Hello, world!", "/movie/movie.mp4"))
 
 print("Checking getAllMovies...")
-assert(dao.getAllMovies())
-length = len(dao.getAllMovies())
-assert(dao.getAllMovies()[length-1]["title"] == "TestTest")
+assert(dao.getAllMovies(test_movie_db))
+length = len(dao.getAllMovies(test_movie_db))
+assert(dao.getAllMovies(test_movie_db)[0]["title"] == "TestTest")
+
+print("Cheking getContentsFromId...")
+assert(dao.getContentsFromId(test_movie_db, 1)["title"] == "TestTest")
+
+deleteTestDb()
 
 print("Finish All Test.")

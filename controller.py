@@ -13,6 +13,7 @@ from datetime import datetime
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 db_file_name = const.DB_FILE_NAME
+db_of_moives = "movie"
 MOVIE_UPLOAD_PATH = "./static/movie/"
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ app.secret_key = "vjabpivp3rubvpiebvASDwibp"
 
 @app.route('/')
 def showIndexView():
-    postList = dao.getAllMovies()
+    postList = dao.getAllMovies(db_of_moives)
     return render_template("index.html", username=getLoginUser(), postList=postList)
 
 @app.route('/login')
@@ -114,7 +115,7 @@ def runPost():
         saveFileName = datetime.now().strftime("%Y%m%d_%H%M%S_") + werkzeug.utils.secure_filename(fileName)
         file.save(os.path.join(MOVIE_UPLOAD_PATH, saveFileName))
 
-        dao.insertMovie(userid, title, comment,os.path.join(MOVIE_UPLOAD_PATH, saveFileName))
+        dao.insertMovie(db_of_moives, userid, title, comment,os.path.join(MOVIE_UPLOAD_PATH, saveFileName))
 
         print("success upload")
 
@@ -123,7 +124,12 @@ def runPost():
 
 @app.route('/contents')
 def showContentsUpView():
-    return render_template('contents.html', username=getLoginUser())
+    
+    if request.method == "GET":
+        contents_id = request.args.get("id")
+        contents_info = dao.getContentsFromId(db_of_moives,int(contents_id))
+
+    return render_template('contents.html', username=getLoginUser(), contents_info=contents_info)
 
 @app.route('/account')
 def showAccountView():
