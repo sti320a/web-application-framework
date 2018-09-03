@@ -1,0 +1,20 @@
+{% extends "layout.html" %} {% block body %}
+<div id="post-container">
+    <form action="/post" method="post" enctype="multipart/form-data">
+        <h2>新しい投稿</h2>
+        <div class="form-group">
+            <label>タイトル</label>
+            <input type="text" class="form-control" name="title">
+        </div>
+        <div class="form-group">
+            <label>内容</label>
+            <textarea class="form-control" cols="100" rows="10" name="contents"></textarea>
+        </div>
+        <div class="form-group">
+            <label>動画を追加</label><br>
+            <input type="file">
+        </div>
+        <button type="submit" class="btn btn-primary">投稿する</button>
+    </form>
+</div>
+{% endblock %}

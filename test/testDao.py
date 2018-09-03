@@ -86,4 +86,12 @@ print("Checking getUserInfo...")
 assert(dao.getUserInfo("sample1@test.com", "sample_auth_key1")["name"] == "sample_test_1")
 assert(dao.getUserInfo("sample1@test.com", "sample_auth_key1")["email"] == "sample1@test.com")
 
+print("Checking insertMovie...")
+assert(dao.insertMovie("1", "TestTest", "Hello, world!", "/movie/movie.mp4"))
+
+print("Checking getAllMovies...")
+assert(dao.getAllMovies())
+length = len(dao.getAllMovies())
+assert(dao.getAllMovies()[length-1]["title"] == "TestTest")
+
 print("Finish All Test.")

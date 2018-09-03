@@ -1,12 +1,12 @@
 {% extends "layout.html" %} {% block body %}
 <!-- Write html body -->
 
-<!-- using "contents-list.html" from here -->
 <div id="main-contents-list-container">
-    {% for i in range(1,5): %}
-    <a href="contents" class="contents-box">This includes some content.</a>
+    {% for post in postList: %}
+    <a href="contents?id={{post['id']}}" class="contents-box">{{post['title']}}</a>
     {% endfor %}
 </div>
-<!-- using "contents-list.html" to here -->
+
+<a href="/post" class="btn btn-primary">投稿する</a>
 
 {% endblock %}

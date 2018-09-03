@@ -231,7 +231,8 @@ def getUserInfo(email, auth_key):
     for row in sql_result:
         temp_list.append(row)
 
-    user_info = {}
+
+        user_info = {}
     user_info["id"] = temp_list[0][0]
     user_info["name"] = temp_list[0][1]
     user_info["email"] = temp_list[0][2]
@@ -241,3 +242,35 @@ def getUserInfo(email, auth_key):
     return user_info
 
 
+"""
+Save user's post
+"""
+
+def insertMovie(userid, title, comment, path):
+    
+    create("CREATE TABLE IF NOT EXISTS movie (id int, userid int, title varchar(64), comment varchar(2000), path varchar(200), created_at timestamp default (DATETIME('now', 'localtime')), updated_at timestamp default (DATETIME('now', 'localtime')))", "movie")
+    id = getNewId4Insert("movie", "movie")
+    insert("INSERT INTO movie(id, userid, title, comment, path) VALUES(?,?,?,?,?)", [id,userid,title,comment,path], "movie")
+
+    return True
+
+def getAllMovies():
+    sql_result = select("SELECT * FROM movie", "movie", True) 
+
+    temp_list = [] 
+    for row in sql_result:
+        temp_list.append(row)
+
+    post_list = []
+    for row in temp_list:
+        post = {}    
+        post["id"] = row[0]
+        post["userid"] = row[1]
+        post["title"] = row[2]
+        post["comment"] = row[3]
+        post["path"] = row[4]
+        post["created_at"] = row[5]
+        post["updated_at"] = row[6]
+        post_list.append(post)
+
+    return post_list

@@ -15,7 +15,8 @@ app.secret_key = "vjabpivp3rubvpiebvASDwibp"
 
 @app.route('/')
 def showIndexView():
-    return render_template("index.html", username=getLoginUser())
+    postList = dao.getAllPost()
+    return render_template("index.html", username=getLoginUser(), postList=postList)
 
 @app.route('/login')
 def showLoginView():
@@ -80,6 +81,23 @@ def signupUserProvisionally():
         return render_template('provisionalSignupCompleted.html', username=getLoginUser(), email=email)
     else:
         return redirect('/signup')
+
+@app.route('/post')
+def showPostView():
+    if request.method == "GET":
+        return render_template('post.html', username=getLoginUser())
+    
+@app.route('/post', methods=['POST'])
+def runPost():    
+    if request.method == "POST":
+        
+        title = request.form['title']
+        contents = request.form['contents']
+        userid = getLoginUserid()
+
+        dao.insertPost(userid, title, contents)
+
+        return redirect('/')
 
 
 @app.route('/contents')
